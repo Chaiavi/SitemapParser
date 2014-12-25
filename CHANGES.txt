@@ -1,0 +1,5 @@
+Sitemap Parser Change Log
+
+Current Development 0.4-SNAPSHOT
+- First version, working project
+- Currently only parsing online URLs
