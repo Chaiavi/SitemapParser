@@ -6,7 +6,7 @@
 
     <groupId>org.chaiware</groupId>
     <artifactId>sitemap-parser</artifactId>
-    <version>0.5-SNAPSHOT</version>
+    <version>0.6</version>
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -14,8 +14,7 @@
         </license>
     </licenses>
     <url>http://code.google.com/p/crawler-commons/</url>
-    <description>sitemap-parser is a tool used to parse sitemaps
-    </description>
+    <description>SitemapParser is a tool used to parse sitemaps</description>
 
     <developers>
         <developer>
@@ -27,15 +26,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.google.code.crawler-commons</groupId>
+            <groupId>com.github.crawler-commons</groupId>
             <artifactId>crawler-commons</artifactId>
-            <version>0.5</version>
+            <version>0.10</version>
         </dependency>
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.1.2</version>
+            <version>1.2.3</version>
         </dependency>
     </dependencies>
 
