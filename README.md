@@ -8,5 +8,6 @@ Just send a URL of an online sitemap and you will get all of its content
 
 This tool basically uses [CrawlerCommons](https://code.google.com/p/crawler-commons/) Sitemap functionality - they did the heavy lifting of the sitemap parsing, I just created a wrapper tool which can easily run and do the work.
 
+
 #### Usage:
-Currently it runs under an UDE, so just run it regulary and add a url of a sitemap as the first argument
+Java -jar SitemapParser v0.6.jar [URL OF A SITEMAP]
