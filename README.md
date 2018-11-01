@@ -11,7 +11,8 @@ This tool basically uses [CrawlerCommons](https://code.google.com/p/crawler-comm
 
 #### Usage
 Java -jar SitemapParser v0.6.jar [URL OF A SITEMAP]
+Or just use the windows batch command line file (ParseSitemap.bat).
 
 
 #### Please Note
-SitemapParser uses SLF4J as its logging API, backed by logback as implementation, so in order to configure the log trace, use a logback configuration file.
+SitemapParser uses SLF4J as its logging API, backed by logback as implementation, so in order to configure the log trace, tweak the logback.xml configuration file included in the released zip file (and run the jar with the -Dlogback.configurationFile=logback.xml flag).
