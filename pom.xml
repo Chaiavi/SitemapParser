@@ -66,10 +66,10 @@
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
                             <outputDirectory>
-                                bin
+                                zip-resources
                             </outputDirectory>
                             <finalName>
-                                SitemapParser v${project.version}
+                                SitemapParser-v${project.version}
                             </finalName>
                         </configuration>
                     </execution>
