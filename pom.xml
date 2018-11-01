@@ -65,6 +65,7 @@
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
+                            <appendAssemblyId>false</appendAssemblyId>
                             <outputDirectory>
                                 zip-resources
                             </outputDirectory>
@@ -73,8 +74,26 @@
                             </finalName>
                         </configuration>
                     </execution>
+
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- append to the packaging phase. -->
+                        <goals>
+                            <goal>single</goal> <!-- goals == mojos -->
+                        </goals>
+
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/assembly/zip.xml</descriptor>
+                            </descriptors>
+                            <outputDirectory>
+                                dist
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 </project>
