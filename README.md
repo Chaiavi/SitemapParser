@@ -9,5 +9,9 @@ Just send a URL of an online sitemap and you will get all of its content
 This tool basically uses [CrawlerCommons](https://code.google.com/p/crawler-commons/) Sitemap functionality - they did the heavy lifting of the sitemap parsing, I just created a wrapper tool which can easily run and do the work.
 
 
-#### Usage:
+#### Usage
 Java -jar SitemapParser v0.6.jar [URL OF A SITEMAP]
+
+
+#### Please Note
+SitemapParser uses SLF4J as its logging API, backed by logback as implementation, so in order to configure the log trace, use a logback configuration file.
