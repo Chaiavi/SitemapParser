@@ -1,18 +1,58 @@
-SitemapParser
-=============
+# 🗺️ SitemapParser
 
-**Simple Java Tool to Parse any Online Sitemap**
+**A simple Java tool to parse any online sitemap.**
 
-The tool parses all sorts of Sitemaps, including zipped ones and even sitemap Indexes (recursive parsing).
-Just send a URL of an online sitemap and you will get all of its content
+---
 
-This tool basically uses [CrawlerCommons](https://code.google.com/p/crawler-commons/) Sitemap functionality - they did the heavy lifting of the sitemap parsing, I just created a wrapper tool which can easily run and do the work.
+## Overview
 
+SitemapParser handles all types of sitemaps — including compressed (`.gz`) sitemaps and **Sitemap Index files** with full recursive parsing. Just provide a URL and get all the sitemap content back.
 
-#### Usage
-Java -jar SitemapParser v0.6.jar [URL OF A SITEMAP]
-Or just use the windows batch command line file (ParseSitemap.bat).
+> Built on top of [Crawler Commons](https://code.google.com/p/crawler-commons/) sitemap functionality. They did the heavy lifting of sitemap parsing — this project wraps it into an easy-to-use command-line tool.
 
+---
 
-#### Please Note
-SitemapParser uses SLF4J as its logging API, backed by logback as implementation, so in order to configure the log trace, tweak the logback.xml configuration file included in the released zip file (and run the jar with the -Dlogback.configurationFile=logback.xml flag).
+## 🚀 Usage
+
+### Command Line
+
+```bash
+java -jar SitemapParser_v0.6.jar [URL_OF_A_SITEMAP]
+```
+
+### Windows
+
+Use the included batch file:
+
+```bash
+ParseSitemap.bat
+```
+
+---
+
+## ⚙️ Logging Configuration
+
+SitemapParser uses **SLF4J** as its logging API with **Logback** as the implementation.
+
+To customize the log output, edit the `logback.xml` configuration file included in the release zip, then run with:
+
+```bash
+java -Dlogback.configurationFile=logback.xml -jar SitemapParser_v0.6.jar [URL]
+```
+
+---
+
+## ✨ Features
+
+| Feature | Details |
+|---|---|
+| **Standard Sitemaps** | Parses XML sitemaps |
+| **Compressed Sitemaps** | Handles `.gz` zipped sitemaps |
+| **Sitemap Index** | Recursively parses sitemap index files |
+| **Easy to Use** | Single command — just pass a URL |
+
+---
+
+## 🙏 Credits
+
+Sitemap parsing powered by [Crawler Commons](https://code.google.com/p/crawler-commons/).
