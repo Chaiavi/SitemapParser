@@ -27,6 +27,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
@@ -44,23 +46,24 @@ public class SitemapParser {
       LOG.info("Usage: SitemapParser [URL_TO_PARSE]");
       System.exit(1);
     } else {
+      String inputArg = args.length == 1 ? args[0] : String.join(" ", args);
       try {
-        URI inputUri = URI.create(args[0]);
-        URL url = inputUri.toURL();
-        Path outputPath = buildOutputPath(inputUri);
+        InputSpec input = resolveInput(inputArg);
+        URL url = input.url();
+        Path outputPath = buildOutputPath(input.outputBaseName());
         int totalUrls;
         try (BufferedWriter writer = Files.newBufferedWriter(outputPath, StandardCharsets.UTF_8)) {
           totalUrls = parseSitemap(url, writer);
         }
         LOG.info("Wrote {} URLs to {}", totalUrls, outputPath.toAbsolutePath());
       } catch (IllegalArgumentException iae) {
-        LOG.error("Bad URI: {}", args[0], iae);
+        LOG.error("Bad URI: {}", inputArg, iae);
         System.exit(2);
       } catch (MalformedURLException mue) {
-        LOG.error("Bad URL: {}", args[0], mue);
+        LOG.error("Bad URL: {}", inputArg, mue);
         System.exit(2);
       } catch (Exception e) {
-        LOG.error("Error occurred while trying to parse: {}", args[0], e);
+        LOG.error("Error occurred while trying to parse: {}", inputArg, e);
         System.exit(3);
       }
     }
@@ -88,9 +91,32 @@ public class SitemapParser {
     return count;
   }
 
-  private static Path buildOutputPath(URI uri) {
-    String baseName = uri.toString().replaceAll("[^A-Za-z0-9._-]+", "_");
+  private static Path buildOutputPath(String outputBaseName) {
+    String baseName = outputBaseName.replaceAll("[^A-Za-z0-9._-]+", "_");
     String fileName = baseName + "_" + OUTPUT_TIMESTAMP.format(LocalDateTime.now()) + ".txt";
     return Path.of(fileName);
+  }
+
+  private static InputSpec resolveInput(String arg) throws MalformedURLException {
+    try {
+      Path path = Paths.get(arg);
+      if (Files.exists(path)) {
+        return new InputSpec(path.toUri().toURL(), path.getFileName().toString());
+      }
+    } catch (InvalidPathException ignored) {
+      // Fall back to treating input as a URI.
+    }
+    URI inputUri = URI.create(arg);
+    if ("file".equalsIgnoreCase(inputUri.getScheme())) {
+      Path path = Path.of(inputUri);
+      return new InputSpec(inputUri.toURL(), path.getFileName().toString());
+    }
+    if (inputUri.getScheme() != null) {
+      return new InputSpec(inputUri.toURL(), inputUri.toString());
+    }
+    return new InputSpec(inputUri.toURL(), inputUri.toString());
+  }
+
+  private record InputSpec(URL url, String outputBaseName) {
   }
 }
