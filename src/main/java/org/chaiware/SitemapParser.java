@@ -19,10 +19,16 @@ import crawlercommons.sitemaps.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 
 /**
@@ -31,6 +37,7 @@ import java.util.Collection;
 public class SitemapParser {
   private static final SiteMapParser PARSER = new SiteMapParser();
   private static final Logger LOG = LoggerFactory.getLogger(SitemapParser.class);
+  private static final DateTimeFormatter OUTPUT_TIMESTAMP = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
 
   public static void main(String[] args) {
     if (args.length < 1) {
@@ -38,8 +45,17 @@ public class SitemapParser {
       System.exit(1);
     } else {
       try {
-        URL url = URI.create(args[0]).toURL();
-        parseSitemap(url);
+        URI inputUri = URI.create(args[0]);
+        URL url = inputUri.toURL();
+        Path outputPath = buildOutputPath(inputUri);
+        int totalUrls;
+        try (BufferedWriter writer = Files.newBufferedWriter(outputPath, StandardCharsets.UTF_8)) {
+          totalUrls = parseSitemap(url, writer);
+        }
+        LOG.info("Wrote {} URLs to {}", totalUrls, outputPath.toAbsolutePath());
+      } catch (IllegalArgumentException iae) {
+        LOG.error("Bad URI: {}", args[0], iae);
+        System.exit(2);
       } catch (MalformedURLException mue) {
         LOG.error("Bad URL: {}", args[0], mue);
         System.exit(2);
@@ -51,19 +67,30 @@ public class SitemapParser {
   }
 
   /** Recursive sitemap parsing method */
-  private static void parseSitemap(URL url) throws IOException, UnknownFormatException {
+  private static int parseSitemap(URL url, BufferedWriter writer)
+    throws IOException, UnknownFormatException {
     AbstractSiteMap sm = PARSER.parseSiteMap(url);
+    int count = 0;
 
     if (sm.isIndex()) {
       Collection<AbstractSiteMap> links = ((SiteMapIndex) sm).getSitemaps();
       for (AbstractSiteMap asm : links) {
-        parseSitemap(asm.getUrl());
+        count += parseSitemap(asm.getUrl(), writer);
       }
     } else {
       Collection<SiteMapURL> links = ((SiteMap) sm).getSiteMapUrls();
       for (SiteMapURL smu : links) {
-        LOG.info("{}", smu);
+        writer.write(smu.getUrl().toString());
+        writer.newLine();
+        count++;
       }
     }
+    return count;
+  }
+
+  private static Path buildOutputPath(URI uri) {
+    String baseName = uri.toString().replaceAll("[^A-Za-z0-9._-]+", "_");
+    String fileName = baseName + "_" + OUTPUT_TIMESTAMP.format(LocalDateTime.now()) + ".txt";
+    return Path.of(fileName);
   }
 }
