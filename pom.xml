@@ -6,14 +6,14 @@
 
     <groupId>org.chaiware</groupId>
     <artifactId>sitemap-parser</artifactId>
-    <version>0.6</version>
+    <version>0.7</version>
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </licenses>
-    <url>http://code.google.com/p/crawler-commons/</url>
+    <url>https://github.com/Chaiavi/SitemapParser</url>
     <description>SitemapParser is a tool used to parse sitemaps</description>
 
     <developers>
@@ -24,22 +24,36 @@
         </developer>
     </developers>
 
+    <distributionManagement>
+        <repository>
+            <id>local-deploy</id>
+            <url>file:${project.build.directory}/deploy-repo</url>
+        </repository>
+    </distributionManagement>
+
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.release>21</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <crawler-commons.version>1.6</crawler-commons.version>
+        <logback.version>1.5.29</logback.version>
+        <slf4j.version>2.0.17</slf4j.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.github.crawler-commons</groupId>
             <artifactId>crawler-commons</artifactId>
-            <version>0.10</version>
+            <version>${crawler-commons.version}</version>
         </dependency>
-
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
     </dependencies>
 
