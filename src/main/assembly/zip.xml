@@ -4,8 +4,8 @@
         <format>zip</format>
     </formats>
     <files>
-        <file><source>zip-resources/SitemapParser-v${project.version}.jar</source></file>
+        <file><source>${project.build.directory}/SitemapParser-v${project.version}.jar</source></file>
         <file><source>src/main/resources/logback.xml</source></file>
-        <file><source>zip-resources/ParseSitemap.bat</source></file>
+        <file><source>src/main/resources/ParseSitemap.bat</source></file>
     </files>
 </assembly>

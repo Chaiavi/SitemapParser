@@ -80,9 +80,6 @@
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
                             <appendAssemblyId>false</appendAssemblyId>
-                            <outputDirectory>
-                                zip-resources
-                            </outputDirectory>
                             <finalName>
                                 SitemapParser-v${project.version}
                             </finalName>
@@ -101,7 +98,7 @@
                                 <descriptor>src/main/assembly/zip.xml</descriptor>
                             </descriptors>
                             <outputDirectory>
-                                dist
+                                ${project.build.directory}/dist
                             </outputDirectory>
                         </configuration>
                     </execution>

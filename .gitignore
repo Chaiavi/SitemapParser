@@ -1,0 +1,13 @@
+# Maven build output
+/target/
+
+# Distribution artifacts
+/dist/
+/zip-resources/
+
+# IntelliJ IDEA
+/.idea/
+*.iml
+
+# OS cruft
+Thumbs.db
