@@ -6,7 +6,7 @@
 
     <groupId>org.chaiware</groupId>
     <artifactId>sitemap-parser</artifactId>
-    <version>0.7</version>
+    <version>0.8</version>
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
