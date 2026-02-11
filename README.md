@@ -55,4 +55,4 @@ java -Dlogback.configurationFile=logback.xml -jar SitemapParser_v0.6.jar [URL]
 
 ## 🙏 Credits
 
-Sitemap parsing powered by [Crawler Commons](https://code.google.com/p/crawler-commons/).
+Sitemap parsing powered by [Crawler Commons](https://github.com/crawler-commons/crawler-commons).
